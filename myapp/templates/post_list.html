@@ -1,0 +1,50 @@
+<!-- 게시글 목록을 보여주는 템플릿 -->
+<!-- post_list.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>게시글 목록</h2>
+  <ul class="list-group">
+    {% for post in posts %}
+      <li class="list-group-item">
+        <h3>{{ post.title }}</h3>
+        <p>작성자: {{ post.author.username }} - 작성일: {{ post.created_at }}</p>
+        <p>{{ post.content }}</p>
+        <h4>댓글</h4>
+        <ul>
+          {% for comment in post.comments.all %}
+            <li>{{ comment.content }}</li>
+            <!-- 댓글 삭제 버튼 -->
+            <form method="post" action="{% url 'comment_delete' board_id=post.pk comment_id=comment.pk %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger">댓글 삭제</button>
+            </form>
+          {% endfor %}
+        </ul>
+        <!-- 댓글 추가 폼 -->
+        <form method="post" action="{% url 'comment_create' pk=post.pk %}">
+          {% csrf_token %}
+          <textarea name="content" rows="3" cols="40" required></textarea>
+          <button type="submit" class="btn btn-primary">댓글 작성</button>
+        </form>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
+
+<!-- {% extends 'base.html' %}
+
+{% block content %}
+  <h2>게시글 목록</h2>
+  <ul class="list-group">
+    {% for post in posts %}
+      <li class="list-group-item">
+        <h3>{{ post.title }}</h3>
+        <p>작성자: {{ post.author.username }} - 작성일: {{ post.created_at }}</p>
+        <p>{{ post.content }}</p>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
+-->

@@ -1,0 +1,29 @@
+<!-- 게시글 삭제를 확인하는 폼을 표시하는 템플릿 -->
+<!-- post_confirm_delete.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>게시글 삭제 확인</h2>
+  <p>다음 게시글을 삭제하시겠습니까?</p>
+  <h3>{{ post.title }}</h3>
+  <p>작성자: {{ post.author.username }}</p>
+  <p>작성일: {{ post.created_at }}</p>
+  <p>{{ post.content }}</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">삭제</button>
+  </form>
+{% endblock %}
+
+<!--
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>게시글 삭제 확인</h2>
+  <p>다음 게시글을 삭제하시겠습니까?</p>
+  <p>{{ post.title }}</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">삭제</button>
+  </form>
+{% endblock %}

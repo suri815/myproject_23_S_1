@@ -1,0 +1,46 @@
+<!-- 게시글 작성/수정 폼을 표시하는 템플릿 -->
+<!-- post_form.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>게시글 작성</h2>
+  <form method="post">
+    {% csrf_token %}
+    
+    <!-- 제목 필드 -->
+    <div class="form-group">
+      <label for="{{ form.title.id_for_label }}">제목</label>
+      {{ form.title }}
+    </div>
+    
+    <!-- 작성자 필드 (예시로 현재 로그인한 사용자의 username을 출력) -->
+    <div class="form-group">
+      <label for="{{ form.author.id_for_label }}">작성자</label>
+      <p>{{ request.user.username }}</p>
+      <!-- 만약 작성자를 직접 선택하도록 하려면 아래와 같이 변경 가능 -->
+      <!-- {{ form.author }} -->
+    </div>
+    
+    <!-- 내용 필드 -->
+    <div class="form-group">
+      <label for="{{ form.content.id_for_label }}">내용</label>
+      {{ form.content }}
+    </div>
+    
+    <!-- 필요에 따라 더 많은 폼 필드 추가 가능 -->
+    
+    <button type="submit" class="btn btn-primary">작성</button>
+  </form>
+{% endblock %}
+
+<!--
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>게시글 작성</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">작성</button>
+  </form>
+{% endblock %}
